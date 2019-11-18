@@ -17,8 +17,7 @@
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
-
+double scale=1;
 // CmytestView
 
 IMPLEMENT_DYNCREATE(CmytestView, CView)
@@ -28,6 +27,8 @@ BEGIN_MESSAGE_MAP(CmytestView, CView)
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
+//	ON_WM_MOUSEHWHEEL()
+ON_WM_MOUSEWHEEL()
 END_MESSAGE_MAP()
 
 // CmytestView 构造/析构
@@ -107,18 +108,19 @@ void CmytestView::OnDraw(CDC* pDC)
 	pDC->EndPath();
 	pDC->SelectClipPath(RGN_DIFF);
 
-	int inpo = 400;//调整起始位置
+	double inpo = 400;//调整起始位置
+	//double scale;
+
 	for (int i = 0; i < 5; i++) {
-		//pDC->MoveTo(400 + 100*i,400+ 100 * i);
-		//pDC->LineTo(600 + 100 * i, 500 + 100 * i);
-		pDC->MoveTo(myship.outdm()->ship_profile[i].x + 1.5 * inpo, myship.outdm()->ship_profile[i].y + inpo);
+
+		pDC->MoveTo(int(myship.outdm()->ship_profile[i].x*scale +  2*inpo), int(myship.outdm()->ship_profile[i].y * scale + inpo));
 		if (4 == i) {
-			pDC->LineTo(myship.outdm()->ship_profile[0].x + 1.5*inpo, myship.outdm()->ship_profile[0].y + inpo);
+			pDC->LineTo(int(myship.outdm()->ship_profile[0].x * scale + 2 * inpo), int(myship.outdm()->ship_profile[0].y * scale + inpo));
 		}
 		else {
-			pDC->LineTo(myship.outdm()->ship_profile[i + 1].x + 1.5 * inpo, myship.outdm()->ship_profile[i + 1].y + inpo);
+			pDC->LineTo(int(myship.outdm()->ship_profile[i + 1].x * scale + 2 * inpo), int(myship.outdm()->ship_profile[i + 1].y * scale + inpo));
 		}
-		}
+	}
 	//pDC->TextOutW(0, 30, str2);
 
 	
@@ -166,3 +168,22 @@ CmytestDoc* CmytestView::GetDocument() const // 非调试版本是内联的
 
 
 // CmytestView 消息处理程序
+
+
+
+
+BOOL CmytestView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	if (zDelta > 0) {
+		scale += 1;
+	}
+	else {
+		scale -= 1;
+		if (scale < 0) {
+			scale = 1;
+		}
+	}
+	Invalidate();
+	return CView::OnMouseWheel(nFlags, zDelta, pt);
+}
