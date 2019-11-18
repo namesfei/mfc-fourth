@@ -60,7 +60,7 @@ void CmytestView::OnDraw(CDC* pDC)
 		return;
 
 	 //TODO: 在此处为本机数据添加绘制代码
-	sta_shipdata mship = { {'1','2','3','4','5','6','7','8','9'}, "阳光",{'8','8','8','8'},90,18,5,2000 };
+	sta_shipdata mship = { "阳光",{'1','2','3','4','5','6','7','8','9','\0'}, {'8','8','8','8','\0'},90,18,5,2000 };
 	Ship myship(mship);
 	myship.set_position(123, 35);
 	myship.set_speed_course(20, 90);
@@ -69,17 +69,38 @@ void CmytestView::OnDraw(CDC* pDC)
 	CString strname("船名："),strnum("呼号："),strmmsi("MMSI：");
 	CString strlen("船长："),strwid("船宽："),strdraf("吃水：");
 	CString strdis("排水："), strcous("航向："), strspe("航速：");
-	CString strpos("船舶位置："), strlat, strlong;
+	CString strpos("船舶位置：");
 
 	strname += myship.outsm()->name;
 	strnum += myship.outsm()->number;
 	strmmsi += myship.outsm()->MMSI;
-	str.Format(_T("%f"), myship.outsm()->length); strlen += str; strlen += "米";
-	str.Format(_T("%f"), myship.outsm()->width); strwid += str; strwid += "米";
-	str.Format(_T("%f"), myship.outsm()->draft); strdraf += str; strdraf += "米";
-	str.Format(_T("%f"), myship.outsm()->displacement); strdis += str; strdis += "吨";
-	pDC->TextOutW(0,30,strdis);
-	pDC->TextOutW(0, 0, strname);
+	str.Format(_T("%.3f"), myship.outsm()->length); strlen += str; strlen += "米";
+	str.Format(_T("%.3f"), myship.outsm()->width); strwid += str; strwid += "米";
+	str.Format(_T("%.3f"), myship.outsm()->draft); strdraf += str; strdraf += "米";
+	str.Format(_T("%.3f"), myship.outsm()->displacement); strdis += str; strdis += "吨";
+	str.Format(_T("%.3f"), myship.outdm()->course); strcous += str; strcous += "°";
+	str.Format(_T("%.3f"), myship.outdm()->speed); strspe += str; strspe += "Km/h";
+	str.Format(_T("%.3f"), myship.outdm()->latitude); strpos += str; strpos += "° ";
+	if (myship.outdm()->latitude < 0)
+		strpos += "S   ";
+	else
+		strpos += "N   ";
+	str.Format(_T("%.3f"), myship.outdm()->longitude); strpos += str; strpos += "° ";
+	if (myship.outdm()->longitude < 0)
+		strpos += "W";
+	else
+		strpos += "E";
+
+	pDC->TextOutW(0, 30, strname);
+	pDC->TextOutW(0, 60, strnum);
+	pDC->TextOutW(0, 90, strmmsi);
+	pDC->TextOutW(0, 120, strlen);
+	pDC->TextOutW(0, 150, strwid);
+	pDC->TextOutW(0, 180, strdraf);
+	pDC->TextOutW(0, 210, strdis);
+	pDC->TextOutW(0, 240, strcous);
+	pDC->TextOutW(0, 270, strspe);
+	pDC->TextOutW(0, 300, strpos);
 
 	//pDC->TextOutW(0, 30, str2);
 

@@ -14,10 +14,10 @@ Ship::Ship(sta_shipdata stdat)
 	pm_sta_shipdata = new sta_shipdata;
 	pm_dy_shipdata = new dy_shipdata;
 	pm_sta_shipdata->name = stdat.name;
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 5; i++) {
 		pm_sta_shipdata->number[i] = stdat.number[i];
 	}
-	for (int i = 0; i < 9; i++) {
+	for (int i = 0; i < 10; i++) {
 		pm_sta_shipdata->MMSI[i] = stdat.MMSI[i];
 	}
 	pm_sta_shipdata->length = stdat.length;

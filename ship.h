@@ -3,9 +3,9 @@
 using namespace std;
 struct sta_shipdata 
 {
-	char MMSI[9];
 	const char* name;
-	char number[4];
+	char MMSI[10];
+	char number[5];
 	float length;	//单位：米
 	float width;	//单位：米
 	float draft;
