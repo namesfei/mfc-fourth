@@ -50,12 +50,12 @@ void Ship::set_ship_profile()
 	pm_dy_shipdata->ship_profile[0].y = 0;
 	pm_dy_shipdata->ship_profile[1].x = pm_sta_shipdata->width;
 	pm_dy_shipdata->ship_profile[1].y = 0;
-	pm_dy_shipdata->ship_profile[2].x = 0;
+	pm_dy_shipdata->ship_profile[2].x = pm_sta_shipdata->width;
 	pm_dy_shipdata->ship_profile[2].y = pm_sta_shipdata->length;
-	pm_dy_shipdata->ship_profile[3].x = pm_sta_shipdata->width;
-	pm_dy_shipdata->ship_profile[3].y = pm_sta_shipdata->length;
-	pm_dy_shipdata->ship_profile[4].x= pm_sta_shipdata->width*0.5;
-	pm_dy_shipdata->ship_profile[4].y = pm_sta_shipdata->length*1.3;
+	pm_dy_shipdata->ship_profile[3].x = pm_sta_shipdata->width * 0.5;
+	pm_dy_shipdata->ship_profile[3].y = pm_sta_shipdata->length * 1.3;
+	pm_dy_shipdata->ship_profile[4].x = 0;
+	pm_dy_shipdata->ship_profile[4].y = pm_sta_shipdata->length;
 }
 void Ship:: dy_set_profile()
 {

@@ -102,6 +102,23 @@ void CmytestView::OnDraw(CDC* pDC)
 	pDC->TextOutW(0, 270, strspe);
 	pDC->TextOutW(0, 300, strpos);
 
+	pDC->BeginPath();
+	pDC->Rectangle(0, 0, 300, 400);
+	pDC->EndPath();
+	pDC->SelectClipPath(RGN_DIFF);
+
+	int inpo = 400;//调整起始位置
+	for (int i = 0; i < 5; i++) {
+		//pDC->MoveTo(400 + 100*i,400+ 100 * i);
+		//pDC->LineTo(600 + 100 * i, 500 + 100 * i);
+		pDC->MoveTo(myship.outdm()->ship_profile[i].x + 1.5 * inpo, myship.outdm()->ship_profile[i].y + inpo);
+		if (4 == i) {
+			pDC->LineTo(myship.outdm()->ship_profile[0].x + 1.5*inpo, myship.outdm()->ship_profile[0].y + inpo);
+		}
+		else {
+			pDC->LineTo(myship.outdm()->ship_profile[i + 1].x + 1.5 * inpo, myship.outdm()->ship_profile[i + 1].y + inpo);
+		}
+		}
 	//pDC->TextOutW(0, 30, str2);
 
 	
